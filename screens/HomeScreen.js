@@ -27,7 +27,7 @@ const HomeScreen = () => {
             <View className="mt-4 w-full">
                 <View className="flex-row justify-between items-center px-3">
                     <Entypo name="menu" size={24} color="black" />
-                    <Text className="font-bold">RUMOUR <Text className="text-[#3471ab] text-[16px] font-bold">Feeds</Text></Text>
+                    <Text className="font-bold">RUMOUR <Text className="text-[#2f72a6] text-[16px] font-bold">Feeds</Text></Text>
                     <TouchableOpacity onPress={handleSearchclosure}>
                         {open ? <EvilIcons name="close" size={24} color="black" /> : <AntDesign name="search1" size={24} color="black" />
                         }
