@@ -1,0 +1,1 @@
+export { default as topfeeds } from "../assets/top-feeds.jpeg"
