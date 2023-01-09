@@ -17,7 +17,6 @@ const LoginScreen = () => {
     return (
         <SafeAreaView className="flex-1 bg-gray-200">
             <Login />
-            <BottomTab />
         </SafeAreaView>
     )
 }

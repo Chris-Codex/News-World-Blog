@@ -3,7 +3,7 @@ import React from 'react'
 
 const BottomTab = () => {
     return (
-        <View className="bg-white top-[700px] h-[80px]">
+        <View className="absolute bg-white w-full top-[760px] h-[90px]">
             <Text>BottomTab</Text>
         </View>
     )

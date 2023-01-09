@@ -1,12 +1,12 @@
 import { View, Text, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
+
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import DisplayPost from '../components/DisplayPost';
-
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -24,10 +24,10 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView className="relative flex-1">
-            <View className="mt-4 w-full">
+            <View className="mt-6 w-full">
                 <View className="flex-row justify-between items-center px-3">
                     <Entypo name="menu" size={24} color="black" />
-                    <Text className="font-bold">RUMOUR <Text className="text-[#2f72a6] text-[16px] font-bold">Feeds</Text></Text>
+                    <Text className="font-bold">RUMOUR <Text className="text-[#3471ab] text-[16px] font-bold">Feeds</Text></Text>
                     <TouchableOpacity onPress={handleSearchclosure}>
                         {open ? <EvilIcons name="close" size={24} color="black" /> : <AntDesign name="search1" size={24} color="black" />
                         }
