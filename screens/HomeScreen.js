@@ -1,16 +1,15 @@
 import { View, Text, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
-
-import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { EvilIcons } from '@expo/vector-icons';
 import DisplayPost from '../components/DisplayPost';
+import Drawer from '../components/Drawer';
+import Header from '../components/Header';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
     const [open, setOpen] = useState(false)
+    const [hamburgerSwitch, setHamburgerSwitch] = useState(false)
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -22,17 +21,14 @@ const HomeScreen = () => {
         setOpen(!open)
     }
 
+    const handleHmaburger = () => {
+        setHamburgerSwitch(!hamburgerSwitch)
+    }
+
     return (
         <SafeAreaView className="relative flex-1">
             <View className="mt-6 w-full">
-                <View className="flex-row justify-between items-center px-3">
-                    <Entypo name="menu" size={24} color="black" />
-                    <Text className="font-bold">RUMOUR <Text className="text-[#3471ab] text-[16px] font-bold">Feeds</Text></Text>
-                    <TouchableOpacity onPress={handleSearchclosure}>
-                        {open ? <EvilIcons name="close" size={24} color="black" /> : <AntDesign name="search1" size={24} color="black" />
-                        }
-                    </TouchableOpacity>
-                </View>
+                <Header open={open} handleHmaburger={handleHmaburger} hamburgerSwitch={hamburgerSwitch} handleSearchclosure={handleSearchclosure} />
                 <View className="px-3 mt-4">
                     <Text className="font-bold text-[14px]">Lets feed you with live News!</Text>
                 </View>
@@ -44,6 +40,7 @@ const HomeScreen = () => {
             </View>
 
             <DisplayPost open={open} />
+            <Drawer hamburgerSwitch={hamburgerSwitch} />
         </SafeAreaView>
     )
 }

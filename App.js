@@ -20,7 +20,7 @@ export default function App() {
     <TailwindProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name='Auth' component={AuthScreen} />
+          {/* <Stack.Screen name='Auth' component={AuthScreen} /> */}
           <Stack.Screen name='Home' component={HomeScreen} />
           <Stack.Screen name='SinglePost' component={SinglePostScreen} />
           <Stack.Screen name="AddPost" component={AddPostScreen} />

@@ -18,7 +18,7 @@ const AuthForm = () => {
                 <View className="w-[120px] h-[120px] rounded-full bg-[#c7e7e0fe] items-center justify-center border-8">
                     <Image source={news} className='w-[115px] h-[115px] rounded-full' />
                 </View>
-                <Text className="mt-4 font-bold text-[20px]">{switchForm ? "Sign In" : "Create Account"}</Text>
+                <Text className="mt-4 font-bold text-[20px]">{switchForm ? "Sign In to continue" : "Create Account"}</Text>
             </View>
 
             {switchForm ? (
