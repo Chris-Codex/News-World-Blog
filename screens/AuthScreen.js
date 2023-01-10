@@ -2,10 +2,10 @@ import { View, Text, SafeAreaView } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import BottomTab from '../components/BottomTab';
-import Login from '../components/Login';
+import AuthForm from '../components/AuthForm';
 
 
-const LoginScreen = () => {
+const AuthScreen = () => {
     const navigation = useNavigation()
 
     useLayoutEffect(() => {
@@ -16,9 +16,9 @@ const LoginScreen = () => {
 
     return (
         <SafeAreaView className="flex-1 bg-gray-200">
-            <Login />
+            <AuthForm />
         </SafeAreaView>
     )
 }
 
-export default LoginScreen
+export default AuthScreen
