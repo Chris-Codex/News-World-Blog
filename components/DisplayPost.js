@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const DisplayPost = ({ open }) => {
-
     const navigation = useNavigation()
 
     return (
