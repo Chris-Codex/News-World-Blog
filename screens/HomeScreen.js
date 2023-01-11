@@ -26,7 +26,7 @@ const HomeScreen = () => {
     }
 
     return (
-        <SafeAreaView className="relative flex-1">
+        <SafeAreaView className="relativ">
             <View className="mt-6 w-full">
                 <Header open={open} handleHmaburger={handleHmaburger} hamburgerSwitch={hamburgerSwitch} handleSearchclosure={handleSearchclosure} />
                 <View className="px-3 mt-4">
@@ -36,7 +36,9 @@ const HomeScreen = () => {
                     <View className="absolute top-14 flex-row bg-[#fffdfd] mx-4 h-[50px] w-[330px] mt-3 rounded-lg justify-between space-x-2 items-center">
                         <TextInput className="h-[50px] w-[330px] px-2 text-[#8f8c8c]" />
                         <MaterialCommunityIcons name="text-search" size={24} color="black" />
-                    </View>) : null}
+                    </View>) :
+                    null
+                }
             </View>
 
             <DisplayPost open={open} />

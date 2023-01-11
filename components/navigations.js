@@ -35,3 +35,35 @@ export const navList = [
     },
 
 ]
+
+export const category = [
+    {
+        icon: "FontAwesome5",
+        size: 24,
+        color: "#2f72a6",
+        title: "Health"
+    },
+
+    {
+        icon: "FontAwesome5",
+        size: 24,
+        color: "#2f72a6",
+        title: "Health"
+    },
+
+    {
+        icon: "FontAwesome5",
+        size: 24,
+        color: "#2f72a6",
+        title: "Health"
+    },
+
+    {
+        icon: "FontAwesome5",
+        size: 24,
+        color: "#2f72a6",
+        title: "Health"
+    },
+
+
+]
