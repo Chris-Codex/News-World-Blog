@@ -38,31 +38,45 @@ export const navList = [
 
 export const category = [
     {
-        icon: "FontAwesome5",
+        icon: "medical-services",
         size: 24,
         color: "#2f72a6",
         title: "Health"
     },
 
     {
-        icon: "FontAwesome5",
+        icon: "food-bank",
         size: 24,
         color: "#2f72a6",
-        title: "Health"
+        title: "Food"
     },
 
     {
-        icon: "FontAwesome5",
+        icon: "attach-money",
         size: 24,
         color: "#2f72a6",
-        title: "Health"
+        title: "Money"
     },
 
     {
-        icon: "FontAwesome5",
+        icon: "computer",
         size: 24,
         color: "#2f72a6",
-        title: "Health"
+        title: "Tech"
+    },
+
+    {
+        icon: "my-library-music",
+        size: 24,
+        color: "#2f72a6",
+        title: "Entertaiment"
+    },
+
+    {
+        icon: "cast-for-education",
+        size: 24,
+        color: "#2f72a6",
+        title: "Education"
     },
 
 

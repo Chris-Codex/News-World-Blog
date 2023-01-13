@@ -1,17 +1,21 @@
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React from 'react'
 import RNPickerSelect from "react-native-picker-select";
-
-
-
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { auth, db } from '../firebase';
+import { catData } from './catData';
+import { useSelector } from 'react-redux';
+import { toggleForm } from '../features/postSlice/postSlice';
 
 const PostForm = () => {
+
 
     return (
         <SafeAreaView className="relative">
             <View className="px-3 mt-6">
                 <View className="px-3 justify-center items-center">
-                    <Text className="text-center font-bold text-[24px]">Add <Text className="text-[#3471ab]">Contents</Text></Text>
+                    <Text className="text-center font-bold text-[24px]">{toggleForm ? <Text>Add <Text className="text-[#3471ab]">Contents</Text></Text> : <Text>Update <Text className="text-[#3471ab]">Contents</Text></Text>}</Text>
                     <View className="border-b-2 border-[#3471ab] w-[80px]"></View>
                 </View>
             </View>
@@ -26,14 +30,7 @@ const PostForm = () => {
                         <RNPickerSelect
                             placeholder={{ label: "Select Category", value: null }}
                             onValueChange={(value) => console.log(value)}
-                            items={[
-                                { label: "JavaScript", value: "JavaScript" },
-                                { label: "TypeScript", value: "TypeScript" },
-                                { label: "Python", value: "Python" },
-                                { label: "Java", value: "Java" },
-                                { label: "C++", value: "C++" },
-                                { label: "C", value: "C" },
-                            ]}
+                            items={catData}
                         />
                     </View>
                 </View>
