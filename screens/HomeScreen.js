@@ -15,6 +15,8 @@ const HomeScreen = () => {
     const [open, setOpen] = useState(false)
     const [hamburgerSwitch, setHamburgerSwitch] = useState(false)
 
+    console.log("LOGIN", user)
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false
@@ -34,7 +36,7 @@ const HomeScreen = () => {
             <View className="mt-6 w-full">
                 <Header open={open} handleHmaburger={handleHmaburger} hamburgerSwitch={hamburgerSwitch} handleSearchclosure={handleSearchclosure} />
                 <View className="px-3 mt-4">
-                    <Text className="font-bold text-[14px]">Welcome back, <Text className="text-red-600">{user.displayName}</Text></Text>
+                    <Text className="font-bold text-[14px]">Welcome back, <Text className="text-red-600">{user?.fullname}</Text></Text>
                 </View>
                 {open ? (
                     <View className="absolute top-14 flex-row bg-[#fffdfd] mx-4 h-[50px] w-[330px] mt-3 rounded-lg justify-between space-x-2 items-center">

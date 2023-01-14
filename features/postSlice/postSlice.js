@@ -17,10 +17,14 @@ const postSlice = createSlice({
 
         loadingSppinner: (state) => {
             state.loading = (!state)
+        },
+
+        post: (state, action) => {
+            state.postData = [...state.postData, action.payload]
         }
     }
 
 })
 
 export default postSlice.reducer
-export const { toggleForm, loadingSppinner } = postSlice.actions
+export const { toggleForm, loadingSpinner, post } = postSlice.actions

@@ -6,7 +6,7 @@ import {
     TextInput,
     Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { news } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,8 +15,12 @@ import {
     registerUser,
     selectRegisteredUsered,
 } from "../features/authSlice.js/authSlice";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import uuid from 'react-native-uuid';
+
+
+let uid = uuid.v4();
+
+
 
 const AuthForm = () => {
     const navigation = useNavigation();
@@ -28,54 +32,40 @@ const AuthForm = () => {
     const [fullname, setFullname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [fullnameError, setFullnameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!switchForm) {
-            if (!email) {
-                setEmailError("Email field can't be empty");
-            } else if (!password) {
-                setPasswordError("Password field can't be empty");
-            } else {
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user
-                        const { uid, displayName, email } = user
-                        dispatch(loginUser({ uid, displayName, email }))
-
+            if (email && password) {
+                users?.map((user) => {
+                    if (user?.email === email && user?.password === password) {
+                        const emailText = email.toLowerCase()
                         setTimeout(() => {
-                            navigation.navigate('Home')
+                            dispatch(loginUser({ id: user.id, fullname: user.fullname, emailText, password }))
+                            Alert.alert("Login was successful")
                             setEmail("")
                             setPassword("")
+                            navigation.navigate("Home")
                         })
-                    })
-            }
-        } else {
-            if (!fullname) {
-                setFullnameError("Name field can't be empty");
-            } else if (!email) {
-                setEmailError("Email field can't be empty");
-            } else if (!password) {
-                setPasswordError("Password field can't be empty");
-            } else {
-                createUserWithEmailAndPassword(auth, email, password).then(
-                    (usersCredentials) => {
-                        const user = usersCredentials.user;
-                        if (user) {
-                            updateProfile(user, { displayName: `${fullname}` });
-                        }
-                        setTimeout(() => {
-                            Alert.alert("Registration was Successful");
-                            setFullname("");
-                            setEmail("");
-                            setPassword("");
-                        }, 2000);
+                    } else if (user.email !== email && user.password !== password) {
+                        Alert.alert("Email or Password doesn't exist")
                     }
-                );
+                })
+            } else {
+                Alert.alert("All fields are required")
+            }
+        } else if (switchForm) {
+            if (email && fullname && password) {
+                setTimeout(() => {
+                    dispatch(registerUser({ id: uid, fullname: fullname, email: email, password: password }))
+                    Alert.alert("Registration was Successful");
+                    setEmail("")
+                    setFullname("")
+                    setPassword("")
+                }, 1000)
+            } else {
+                Alert.alert("All fields are required")
             }
         }
     };
@@ -84,7 +74,7 @@ const AuthForm = () => {
         setSwitchForm(!switchForm);
     };
 
-    console.log("USERS", users);
+    console.log("[USERS IN STATE]", users)
 
     return (
         <View className="flex-1 justify-center px-4 py-6">
@@ -107,9 +97,6 @@ const AuthForm = () => {
                             onChangeText={email => setEmail(email)}
                         />
                     </View>
-                    {emailError && (
-                        <Text className="text-red-600 text-[11px] mt-1">{emailError}</Text>
-                    )}
                     <View className="w-full h-[50px] bg-[#f4f2f2] mt-3">
                         <TextInput
                             placeholder="Password"
@@ -119,11 +106,6 @@ const AuthForm = () => {
                             onChangeText={password => setPassword(password)}
                         />
                     </View>
-                    {passwordError && (
-                        <Text className="text-red-600 text-[11px] mt-1">
-                            {passwordError}
-                        </Text>
-                    )}
                     <TouchableOpacity className="left-52 mt-2">
                         <Text className="text-red-500 font-bold">Forgot Password?</Text>
                     </TouchableOpacity>
@@ -151,11 +133,6 @@ const AuthForm = () => {
                             className="w-full h-[50px] px-2"
                         />
                     </View>
-                    {fullnameError && (
-                        <Text className="text-red-600 text-[11px] mt-1">
-                            {fullnameError}
-                        </Text>
-                    )}
                     <View className="w-full h-[50px] bg-[#f4f2f2] mt-3">
                         <TextInput
                             placeholder="Enter your email"
@@ -165,9 +142,6 @@ const AuthForm = () => {
                             className="w-full h-[50px] px-2"
                         />
                     </View>
-                    {emailError && (
-                        <Text className="text-red-600 text-[11px] mt-1">{emailError}</Text>
-                    )}
                     <View className="w-full h-[50px] bg-[#f4f2f2] mt-3">
                         <TextInput
                             secureTextEntry={hidePassword}
@@ -179,11 +153,6 @@ const AuthForm = () => {
                             className="w-full h-[50px] px-2"
                         />
                     </View>
-                    {passwordError && (
-                        <Text className="text-red-600 text-[11px] mt-1">
-                            {passwordError}
-                        </Text>
-                    )}
                     <TouchableOpacity
                         onPress={handleSubmit}
                         className="w-full h-[50px] bg-[#3471ab] mt-3 items-center justify-center"

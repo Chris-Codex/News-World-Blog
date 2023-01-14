@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { auth } from "../../firebase"
+
 
 const initialState = {
-    user: null,
+    user: {},
     register: [],
 }
 
@@ -16,11 +16,15 @@ export const authSlice = createSlice({
         },
 
         registerUser: (state, action) => {
-            state.register = [...state.register, action.payload]
+            try {
+                state.register = [...state.register, action.payload]
+            } catch (error) {
+                console.log("ERROR OCCURED", error)
+            }
         },
 
-        logoutUser: (state, action) => {
-
+        logoutUser: (state) => {
+            state.register = (null)
         },
     }
 })
