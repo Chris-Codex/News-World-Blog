@@ -18,7 +18,11 @@ import { post, toggleForm } from "../features/postSlice/postSlice";
 import { selectLoginUser } from "../features/authSlice.js/authSlice";
 
 
-
+let today = new Date();
+let year = today.getFullYear();
+let month = today.getMonth() + 1;
+let day = today.getDate();
+const currentDate = month + '/' + day + '/' + year
 
 const PostForm = () => {
     const dispatch = useDispatch()
@@ -31,7 +35,7 @@ const PostForm = () => {
         if (title && category && description) {
             setTimeout(() => {
                 Alert.alert("Post was successful")
-                dispatch(post({ id: getUser.id, title, category, description }))
+                dispatch(post({ id: getUser.id, author: getUser.fullname, title, category, description, date: currentDate }))
                 setTitle("")
                 setCategory("")
                 setDescription("")

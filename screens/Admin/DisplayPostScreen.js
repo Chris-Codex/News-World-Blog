@@ -33,8 +33,8 @@ const DisplayPostScreen = () => {
     }
 
     return (
-        <SafeAreaView className="relativ">
-            <View className="mt-6 w-full">
+        <SafeAreaView className="relative">
+            <View className="relative mt-6 w-full">
                 <Header open={open} handleHmaburger={handleHmaburger} hamburgerSwitch={hamburgerSwitch} handleSearchclosure={handleSearchclosure} />
                 <View className="px-3 mt-4">
                     <Text className="font-bold text-[14px]">Welcome back, <Text className="text-red-600">{user?.fullname}</Text></Text>
@@ -50,10 +50,7 @@ const DisplayPostScreen = () => {
 
             <Drawer hamburgerSwitch={hamburgerSwitch} />
 
-            <ScrollView className="mt-6 px-4">
-                <AdminPost />
-            </ScrollView>
-
+            <AdminPost open={open} />
         </SafeAreaView>
     )
 }
