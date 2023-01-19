@@ -22,7 +22,9 @@ const SignUpSchema = mongose.Schema(
         date: {
             type: String,
             default: Date.now
-        }
+        },
+
+        posts: [{ type: mongoose.Types.ObjectId, ref: "Posts", required: true }]
     }
 )
 

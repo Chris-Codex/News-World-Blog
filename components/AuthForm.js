@@ -16,6 +16,7 @@ import {
     selectRegisteredUsered,
 } from "../features/authSlice.js/authSlice";
 import uuid from 'react-native-uuid';
+import axios from "axios";
 
 
 let uid = uuid.v4();
@@ -33,48 +34,53 @@ const AuthForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const loginRequest = async (type = "login") => {
+        try {
+            const res = await axios.post(`http://localhost:4000/${type}`, {
+                fullname, email, password
+            }).catch((error) => {
+                console.log(error)
+            })
+
+            const data = await res.data
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!switchForm) {
             if (email && password) {
-                users?.map((user) => {
-                    if (user?.email === email && user?.password === password) {
-                        const emailText = email.toLowerCase()
-                        setTimeout(() => {
-                            dispatch(loginUser({ id: user.id, fullname: user.fullname, emailText, password }))
-                            Alert.alert("Login was successful")
-                            setEmail("")
-                            setPassword("")
-                            navigation.navigate("Home")
-                        })
-                    } else if (user.email !== email && user.password !== password) {
-                        Alert.alert("Email or Password doesn't exist")
-                    }
-                })
+                setTimeout(() => {
+                    loginRequest().then(data => dispatch(loginUser(data)))
+                    navigation.navigate("Home")
+                    setEmail("")
+                    setPassword("")
+                }, 2000)
             } else {
                 Alert.alert("All fields are required")
             }
-        } else if (switchForm) {
-            if (email && fullname && password) {
+        } else {
+            if (fullname && email && password) {
                 setTimeout(() => {
-                    dispatch(registerUser({ id: uid, fullname: fullname, email: email, password: password }))
-                    Alert.alert("Registration was Successful");
-                    setEmail("")
+                    loginRequest("register").then(data => console.log(data))
+                    Alert.alert("Registration was succesfull")
                     setFullname("")
+                    setEmail("")
                     setPassword("")
-                }, 1000)
-            } else {
-                Alert.alert("All fields are required")
+                }, 2000)
             }
         }
+
+
     };
 
     const handleFormSwitch = () => {
         setSwitchForm(!switchForm);
     };
-
-    console.log("[USERS IN STATE]", users)
 
     return (
         <View className="flex-1 justify-center px-4 py-6">
@@ -83,7 +89,7 @@ const AuthForm = () => {
                     <Image source={news} className="w-[115px] h-[115px] rounded-full" />
                 </View>
                 <Text className="mt-4 font-bold text-[20px]">
-                    {switchForm ? "Sign In to continue" : "Create Account"}
+                    {switchForm ? "User Sign Up" : "Create Account"}
                 </Text>
             </View>
 

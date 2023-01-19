@@ -3,14 +3,6 @@ const mongose = require("mongoose")
 
 const PostSchema = mongose.Schema(
     {
-        authorId: {
-            type: String
-        },
-
-        author: {
-            type: String,
-        },
-
         title: {
             type: String,
             required: true
@@ -31,14 +23,15 @@ const PostSchema = mongose.Schema(
             required: true
         },
 
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: "Users",
+            required: true
+        },
+
         date: {
             type: String,
             default: Date.now
-        },
-
-        user: {
-            type: String,
-            required: true
         }
     }
 )

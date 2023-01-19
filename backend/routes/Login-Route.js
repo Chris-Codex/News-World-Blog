@@ -4,14 +4,16 @@ const router = express.Router();
 const User = require("../Models/SignUp")
 const bcrypt = require("bcryptjs")
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
+    const { email, password } = req.body
+    const hashPassword = bcrypt.hashSync(password)
     const getUser = User({
-        email: req.body.email,
-        password: req.body.password
+        email,
+        hashPassword
     })
 
     let checkIfUserexist;
-    const { email, password } = getUser
+
     try {
         checkIfUserexist = await User.findOne({ email });
         if (!checkIfUserexist) {
@@ -20,21 +22,18 @@ router.get("/", async (req, res) => {
             const checkIfPasswordExist = bcrypt.compareSync(password, checkIfUserexist.password)
             if (!checkIfPasswordExist) {
                 res.status(404).json({ message: "Password not found" })
-            }
-
-            try {
-                res.send(getUser)
-                res.send({ message: "User Logged In" })
-            } catch (error) {
-                res.send({ message: error })
+            } else {
+                try {
+                    return res.send(getUser)
+                } catch (error) {
+                    res.send({ message: error })
+                }
+                return res.status(200).json({ message: "User Logged In" })
             }
         }
-
-
     } catch (error) {
-
+        return res.status(400).json({ message: error.message })
     }
-
 })
 
 module.exports = router
