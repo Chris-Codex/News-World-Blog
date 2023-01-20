@@ -12,12 +12,14 @@ app.use(cors())
 const loginRoute = require("./routes/Login-Route")
 const signUpRoute = require("./routes/SignUp-Routes")
 const postRoute = require("./routes/Post-Route")
+const categoryRoute = require("./routes/Category-Route")
 
 
 //Routes
 app.use("/login", loginRoute)
 app.use("/register", signUpRoute)
 app.use("/post", postRoute)
+app.use("/category", categoryRoute)
 
 //Database
 mongose.connect(process.env.CONNECT_DB, () => {

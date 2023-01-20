@@ -33,7 +33,7 @@ const Drawer = ({ hamburgerSwitch }) => {
                                     <Text className="relative font-bold text-[#000]">Home</Text>
                                 </TouchableOpacity>
                             </View>
-                            {getCurrentUserID.email === "chris@gmail.com" ? (<View className="flex-row mt-4 space-x-3 items-center">
+                            {getCurrentUserID?.email === "chris@gmail.com" ? (<View className="flex-row mt-4 space-x-3 items-center">
                                 <MaterialIcons name="post-add" size={24} color="#000" />
                                 <View className="absolute w-0 group-hover:w-full transition-all ease-out duration-300 h-full bg-blue-700 left-0 top-0"></View>
                                 <TouchableOpacity onPress={() => navigation.navigate("AddPost")}>
@@ -42,7 +42,7 @@ const Drawer = ({ hamburgerSwitch }) => {
                             </View>
                             ) : null
                             }
-                            {getCurrentUserID.email === "chris@gmail.com" ? (
+                            {getCurrentUserID?.email === "chris@gmail.com" ? (
                                 <View className="flex-row mt-4 space-x-3 items-center">
                                     <MaterialIcons name="preview" size={24} color="#000" />
                                     <View className="absolute w-0 group-hover:w-full transition-all ease-out duration-300 h-full bg-blue-700 left-0 top-0"></View>
