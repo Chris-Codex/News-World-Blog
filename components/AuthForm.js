@@ -59,7 +59,7 @@ const AuthForm = () => {
                             .then(data => {
                                 const { email, password } = data.payload
                                 if (email !== email && password !== password) {
-                                    Alert.alert("Login credentials are not valid")
+                                    Alert.alert("Login credentials are not validdff")
                                 } else if (email === email && password === password) {
                                     navigation.navigate("Home")
                                     setEmail("")
