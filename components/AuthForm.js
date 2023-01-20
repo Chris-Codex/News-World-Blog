@@ -6,27 +6,26 @@ import {
     TextInput,
     Alert,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { news } from "../assets";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    loading,
     loginUser,
     registerUser,
+    selectLoading,
     selectRegisteredUsered,
 } from "../features/authSlice.js/authSlice";
-import uuid from 'react-native-uuid';
 import axios from "axios";
-
-
-let uid = uuid.v4();
-
+import Loading from './Loading';
 
 
 const AuthForm = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const users = useSelector(selectRegisteredUsered);
+    const toggleLoading = useSelector(selectLoading)
     const [switchForm, setSwitchForm] = useState(false);
     const [hidePassword, setHidePassword] = useState(true);
 
@@ -54,12 +53,23 @@ const AuthForm = () => {
 
         if (!switchForm) {
             if (email && password) {
-                setTimeout(() => {
-                    loginRequest().then(data => dispatch(loginUser(data)))
-                    navigation.navigate("Home")
-                    setEmail("")
-                    setPassword("")
-                }, 2000)
+                try {
+                    setTimeout(() => {
+                        loginRequest().then(data => dispatch(loginUser(data)))
+                            .then(data => {
+                                const { email, password } = data.payload
+                                if (email !== email && password !== password) {
+                                    Alert.alert("Login credentials are not valid")
+                                } else if (email === email && password === password) {
+                                    navigation.navigate("Home")
+                                    setEmail("")
+                                    setPassword("")
+                                }
+                            }).catch(err => console.log("ERROR", err))
+                    }, 2000)
+                } catch (error) {
+                    return res.status(400).json({ message: "Failed" })
+                }
             } else {
                 Alert.alert("All fields are required")
             }
@@ -94,40 +104,43 @@ const AuthForm = () => {
             </View>
 
             {!switchForm ? (
-                <View className="px-4 mt-8">
-                    <View className="w-full h-[50px] bg-[#f4f2f2]">
-                        <TextInput
-                            placeholder="Enter your email"
-                            className="w-full h-[50px] px-2"
-                            value={email}
-                            onChangeText={email => setEmail(email)}
-                        />
+                <>
+                    {toggleLoading && <Loading />}
+                    <View className="px-4 mt-8">
+                        <View className="w-full h-[50px] bg-[#f4f2f2]">
+                            <TextInput
+                                placeholder="Enter your email"
+                                className="w-full h-[50px] px-2"
+                                value={email}
+                                onChangeText={email => setEmail(email)}
+                            />
+                        </View>
+                        <View className="w-full h-[50px] bg-[#f4f2f2] mt-3">
+                            <TextInput
+                                placeholder="Password"
+                                className="w-full h-[50px] px-2"
+                                secureTextEntry={true}
+                                value={password}
+                                onChangeText={password => setPassword(password)}
+                            />
+                        </View>
+                        <TouchableOpacity className="left-52 mt-2">
+                            <Text className="text-red-500 font-bold">Forgot Password?</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleSubmit} className="w-full h-[50px] bg-[#3471ab] mt-3 items-center justify-center">
+                            <Text className="text-[#fff] font-bold text-[16px]">Sign In</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={handleFormSwitch}
+                            className="flex-row items-center justify-center mt-3"
+                        >
+                            <Text>
+                                Don't have an account yet?{" "}
+                                <Text className="text-[#3471ab] font-bold">Sign Up</Text>
+                            </Text>
+                        </TouchableOpacity>
                     </View>
-                    <View className="w-full h-[50px] bg-[#f4f2f2] mt-3">
-                        <TextInput
-                            placeholder="Password"
-                            className="w-full h-[50px] px-2"
-                            secureTextEntry={true}
-                            value={password}
-                            onChangeText={password => setPassword(password)}
-                        />
-                    </View>
-                    <TouchableOpacity className="left-52 mt-2">
-                        <Text className="text-red-500 font-bold">Forgot Password?</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleSubmit} className="w-full h-[50px] bg-[#3471ab] mt-3 items-center justify-center">
-                        <Text className="text-[#fff] font-bold text-[16px]">Sign In</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={handleFormSwitch}
-                        className="flex-row items-center justify-center mt-3"
-                    >
-                        <Text>
-                            Don't have an account yet?{" "}
-                            <Text className="text-[#3471ab] font-bold">Sign Up</Text>
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                </>
             ) : (
                 <View className="px-4 mt-8">
                     <View className="w-full h-[50px] bg-[#f4f2f2] mt-3">
